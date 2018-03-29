@@ -1,0 +1,44 @@
+## include url "https://github.com/nikhil10marvel/JShellUpgrader/blob/master/dist/JShellUpgrader.jar"
+## import jshell.upgrader.Update;
+
+module my.util;
+
+## A function to approximate the value of PI
+def double approx_PI(int num){
+    double ret = 0;
+    if(num > 1){
+        double fraction = 180/(double)num;
+        double rad = Math -> toRadians(fraction);
+        ret = Math -> sin(rad) * num;
+    }
+    return ret;
+}
+
+## A basic factorial function
+def long factorial(int num){
+    long ret = 0;
+    if(num == 1){
+        ret =  1;
+    } elif (num == 0){
+        ret = 1;
+    } else {
+        ret = num * factorial(num - 1);
+    }
+    return ret;
+}
+
+## A simple lucas-lehmer function
+def long lucas_lehmer(int limit){
+    int xy = 4;
+    while(xy < limit){
+        int sq = xy * xy;
+        xy = sq - 2;
+    }
+    return xy;
+}
+
+## Just a test
+#^def void downloading(){
+    Update -> fetchFile();
+    System.out -> println(Update -> getSystemDate());
+}^#

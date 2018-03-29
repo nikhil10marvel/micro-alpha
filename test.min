@@ -1,0 +1,39 @@
+require "util.min"
+import my.util;
+
+module my.nikhil;
+
+union_def my {
+    student = {const name, clazz, section, fav};
+    fav = {color, task, object};
+}
+
+def void prt_std(Union student){
+    System.out -> println(color << student);
+    System.out -> println(clazz << student);
+}
+
+#^
+ ^ The entry point of the program
+ ^#
+def void main(String[] args){
+    int num_of_sides = Integer -> parseInt(args[0]);
+    double approx = util->approx_PI(num_of_sides);
+    double percent = (approx/Math.PI) * 100;
+    int xx = 0;
+    while(xx < 10){
+        System.out -> println(util -> factorial(xx));
+        xx = xx + 1;
+    }
+    Union fav_u = Union -> create(fav);
+    fav_u:color = "blue";
+    fav_u:task  = System -> lineSeparator();
+    fav_u:object = "Laptop";
+
+    Union std= Union -> create(student);
+    std:name = "Nikhil";
+    std:clazz= Integer -> valueOf(7);
+    std:section="A";
+    std:fav  = fav_u;
+    prt_std(std);
+}
