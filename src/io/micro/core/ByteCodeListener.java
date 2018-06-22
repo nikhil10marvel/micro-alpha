@@ -64,7 +64,32 @@ public class ByteCodeListener extends MicroBaseListener{
     }
 
     @Override
+    public void enterTryblock(MicroParser.TryblockContext ctx) {
+        methodBuilder.append("try {");
+        super.enterTryblock(ctx);
+    }
+
+    @Override
+    public void exitTryblock(MicroParser.TryblockContext ctx) {
+        methodBuilder.append("}");
+        super.exitTryblock(ctx);
+    }
+
+    @Override
+    public void enterExceptblock(MicroParser.ExceptblockContext ctx) {
+        methodBuilder.append("catch(" + ctx.mid().getText() + " " + ctx.id().getText() + "){");
+        super.enterExceptblock(ctx);
+    }
+
+    @Override
+    public void exitExceptblock(MicroParser.ExceptblockContext ctx) {
+        methodBuilder.append("}");
+        super.exitExceptblock(ctx);
+    }
+
+    @Override
     public void enterImport_stmt(MicroParser.Import_stmtContext ctx) {
+        Log.debug("require","Importing package " + ctx.mid().getText());
         require(ctx.mid().getText());
         super.enterImport_stmt(ctx);
     }
@@ -79,6 +104,24 @@ public class ByteCodeListener extends MicroBaseListener{
         } catch (CannotCompileException e) {
             e.printStackTrace();
         }
+    }
+
+    public String convertStringConcat(MicroParser.String_concatContext ctx){
+        StringBuilder stringBuilder = new StringBuilder();
+        if(ctx.strcval(0).STRING()!= null){
+            stringBuilder.append(ctx.strcval(0).STRING().getText());
+        } else {
+            stringBuilder.append(GET_VALUE(ctx.strcval(0).value()));
+        }
+        for(int x = 1; x < ctx.strcval().size(); x ++){
+            stringBuilder.append("+");
+            if(ctx.strcval(x).STRING()!= null){
+                stringBuilder.append(ctx.strcval(x).STRING().getText());
+            } else {
+                stringBuilder.append(GET_VALUE(ctx.strcval(x).value()));
+            }
+        }
+        return stringBuilder.toString();
     }
 
     @Override
@@ -104,7 +147,7 @@ public class ByteCodeListener extends MicroBaseListener{
         if(ctx.URL() == null){
             ParserPool.program(path.substring(1, path.length()-1));
         } else {
-            URLLoader loader = new URLLoader(path);
+            URLLoader loader = new URLLoader(path.substring(1, path.length()-1));
             loader.load();
             ParserPool.program(loader);
         }
@@ -221,6 +264,7 @@ public class ByteCodeListener extends MicroBaseListener{
         else if(ctx.expr() != null) return convertExpr(ctx.expr());
         else if(ctx.array_ref() != null) return convertArrayRef(ctx.array_ref());
         else if(ctx.uval_get() != null) return convertUval_Get(ctx.uval_get());
+        else if(ctx.string_concat() != null) return convertStringConcat(ctx.string_concat());
         else return null;
     }
 
@@ -238,6 +282,14 @@ public class ByteCodeListener extends MicroBaseListener{
         else return null;
     }
 
+    private String convertVar_Set(MicroParser.Var_SetContext ctx){
+        if(ctx.add_inc() != null) return convertAddInc(ctx.add_inc());
+        else if(ctx.mul_inc() != null) return convertMulInc(ctx.mul_inc());
+        else if(ctx.div_inc() != null) return convertDivInc(ctx.div_inc());
+        else if(ctx.sub_inc() != null) return convertSubInc(ctx.sub_inc());
+        else return null;
+    }
+
     private String convertTypeCasting(MicroParser.Type_castingContext ctx){
         String type = ctx.ptype().getText();
         String value = GET_TYPE(ctx.type());
@@ -251,6 +303,52 @@ public class ByteCodeListener extends MicroBaseListener{
         String param_token = "(\""+ctx.id().getText()+"\", "+type_token+");";
         methodBuilder.append(call_token+param_token);
         super.enterUval_stmt(ctx);
+    }
+
+    private String convertAddInc(MicroParser.Add_incContext ctx){
+        return ctx.mid().getText() + "+=" + GET_TYPE(ctx.type());
+    }
+
+
+    private String convertMulInc(MicroParser.Mul_incContext ctx){
+        return ctx.mid().getText() + "+=" + GET_TYPE(ctx.type());
+    }
+
+
+    private String convertSubInc(MicroParser.Sub_incContext ctx){
+        return ctx.mid().getText() + "+=" + GET_TYPE(ctx.type());
+    }
+
+
+    private String convertDivInc(MicroParser.Div_incContext ctx){
+        return ctx.mid().getText() + "+=" + GET_TYPE(ctx.type());
+    }
+
+    @Override
+    public void enterAdd_inc_stmt(MicroParser.Add_inc_stmtContext ctx) {
+        methodBuilder.append(convertAddInc(ctx.add_inc())).append(";");
+        super.enterAdd_inc_stmt(ctx);
+    }
+
+
+    @Override
+    public void enterMul_inc_stmt(MicroParser.Mul_inc_stmtContext ctx) {
+        methodBuilder.append(convertMulInc(ctx.mul_inc())).append(";");
+        super.enterMul_inc_stmt(ctx);
+    }
+
+
+    @Override
+    public void enterSub_inc_stmt(MicroParser.Sub_inc_stmtContext ctx) {
+        methodBuilder.append(convertSubInc(ctx.sub_inc())).append(";");
+        super.enterSub_inc_stmt(ctx);
+    }
+
+
+    @Override
+    public void enterDiv_inc_stmt(MicroParser.Div_inc_stmtContext ctx) {
+        methodBuilder.append(convertDivInc(ctx.div_inc())).append(";");
+        super.enterDiv_inc_stmt(ctx);
     }
 
     @Override
@@ -292,6 +390,38 @@ public class ByteCodeListener extends MicroBaseListener{
         return new String[]{path, name};
     }
 
+    @Override
+    public void enterArray_set_stmt(MicroParser.Array_set_stmtContext ctx) {
+        String ap = convertArrayRef(ctx.array_ref()) + "=" + GET_TYPE(ctx.type());
+        methodBuilder.append(ap).append(";");
+        super.enterArray_set_stmt(ctx);
+    }
+
+    @Override
+    public void enterArray_def(MicroParser.Array_defContext ctx) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ctx.type_id().getText());
+        for (int i = 0; i < ctx.type().size(); i++) { stringBuilder.append("[]"); }
+        stringBuilder.append(" ").append(ctx.id().getText()).append(" = ");
+        stringBuilder.append("new ").append(ctx.type_id().getText());
+        ctx.type().forEach((type)
+                -> stringBuilder.append("[").append(GET_TYPE(type)).append("]"));
+        stringBuilder.append(";");
+//        System.out.println(stringBuilder.toString());
+        methodBuilder.append(stringBuilder.toString());
+        super.enterArray_def(ctx);
+    }
+
+    @Override
+    public void enterLoad_union_def(MicroParser.Load_union_defContext ctx) {
+        String text = ctx.mid().getText();
+        String name = text.substring(text.lastIndexOf('.')+1, text.length());
+        String method_name = "ld_union_def_" + name + "()";
+        String module_name = text.substring(0, text.lastIndexOf('.')+1);
+        methodBuilder.append(module_name).append(method_name).append(";");
+        super.enterLoad_union_def(ctx);
+    }
+
     private String convertFuncCallLocal(MicroParser.Func_call_localContext ctx){
         StringBuilder sb = new StringBuilder();
         ctx.formalParam().type().forEach((prm) -> {
@@ -314,16 +444,19 @@ public class ByteCodeListener extends MicroBaseListener{
     private String convertExpr(MicroParser.ExprContext ctx){
         String ret = null;
         if(ctx.add() != null){
-            ret =  convertExpr(ctx.expr(0)) + "+" + convertExpr(ctx.expr(1));
+            ret = convertExpr(ctx.expr(0)) + "+" + convertExpr(ctx.expr(1));
         }
         if(ctx.sub() != null){
             ret = convertExpr(ctx.expr(0)) + "-" + convertExpr(ctx.expr(1));
         }
         if(ctx.mul() != null){
-            ret =  convertExpr(ctx.expr(0)) + "*" + convertExpr(ctx.expr(1));
+            ret = convertExpr(ctx.expr(0)) + "*" + convertExpr(ctx.expr(1));
         }
         if(ctx.div() != null){
-            ret =  convertExpr(ctx.expr(0)) + "/" + convertExpr(ctx.expr(1));
+            ret = convertExpr(ctx.expr(0)) + "/" + convertExpr(ctx.expr(1));
+        }
+        if(ctx.mod() != null) {
+            ret = convertExpr(ctx.expr(0)) + "%" + convertExpr(ctx.expr(1));
         }
         if(ctx.value() != null){
             ret = GET_VALUE(ctx.value());
@@ -342,7 +475,7 @@ public class ByteCodeListener extends MicroBaseListener{
 
     @Override
     public void exitFunction(MicroParser.FunctionContext ctx) {
-        String ret = ctx.bx_type().getText();
+        String ret = ctx.bx_type() != null ? ctx.bx_type().getText() : ctx.arrayname().getText();
         String name = ctx.id().getText();
         StringBuilder sb = new StringBuilder();
         ctx.paramList().param().forEach((parm) -> {

@@ -98,6 +98,36 @@ public interface MicroListener extends ParseTreeListener {
 	 */
 	void exitDiv(MicroParser.DivContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MicroParser#mod}.
+	 * @param ctx the parse tree
+	 */
+	void enterMod(MicroParser.ModContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#mod}.
+	 * @param ctx the parse tree
+	 */
+	void exitMod(MicroParser.ModContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#strcval}.
+	 * @param ctx the parse tree
+	 */
+	void enterStrcval(MicroParser.StrcvalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#strcval}.
+	 * @param ctx the parse tree
+	 */
+	void exitStrcval(MicroParser.StrcvalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#string_concat}.
+	 * @param ctx the parse tree
+	 */
+	void enterString_concat(MicroParser.String_concatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#string_concat}.
+	 * @param ctx the parse tree
+	 */
+	void exitString_concat(MicroParser.String_concatContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MicroParser#value}.
 	 * @param ctx the parse tree
 	 */
@@ -187,6 +217,16 @@ public interface MicroListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitField(MicroParser.FieldContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#array_field}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray_field(MicroParser.Array_fieldContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#array_field}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray_field(MicroParser.Array_fieldContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroParser#array_def}.
 	 * @param ctx the parse tree
@@ -398,6 +438,16 @@ public interface MicroListener extends ParseTreeListener {
 	 */
 	void exitTrue_con(MicroParser.True_conContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MicroParser#value_collection}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue_collection(MicroParser.Value_collectionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#value_collection}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue_collection(MicroParser.Value_collectionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MicroParser#boolval}.
 	 * @param ctx the parse tree
 	 */
@@ -518,15 +568,55 @@ public interface MicroListener extends ParseTreeListener {
 	 */
 	void exitWhile_stmt(MicroParser.While_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MicroParser#init_stmt}.
+	 * Enter a parse tree produced by {@link MicroParser#tryblock}.
 	 * @param ctx the parse tree
 	 */
-	void enterInit_stmt(MicroParser.Init_stmtContext ctx);
+	void enterTryblock(MicroParser.TryblockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MicroParser#init_stmt}.
+	 * Exit a parse tree produced by {@link MicroParser#tryblock}.
 	 * @param ctx the parse tree
 	 */
-	void exitInit_stmt(MicroParser.Init_stmtContext ctx);
+	void exitTryblock(MicroParser.TryblockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#exceptblock}.
+	 * @param ctx the parse tree
+	 */
+	void enterExceptblock(MicroParser.ExceptblockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#exceptblock}.
+	 * @param ctx the parse tree
+	 */
+	void exitExceptblock(MicroParser.ExceptblockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#try_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterTry_stmt(MicroParser.Try_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#try_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitTry_stmt(MicroParser.Try_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#for_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor_stmt(MicroParser.For_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#for_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor_stmt(MicroParser.For_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#foreach_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterForeach_stmt(MicroParser.Foreach_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#foreach_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitForeach_stmt(MicroParser.Foreach_stmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroParser#uval_stmt}.
 	 * @param ctx the parse tree
@@ -547,6 +637,46 @@ public interface MicroListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUval_get(MicroParser.Uval_getContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#sub_inc}.
+	 * @param ctx the parse tree
+	 */
+	void enterSub_inc(MicroParser.Sub_incContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#sub_inc}.
+	 * @param ctx the parse tree
+	 */
+	void exitSub_inc(MicroParser.Sub_incContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#add_inc}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdd_inc(MicroParser.Add_incContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#add_inc}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdd_inc(MicroParser.Add_incContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#mul_inc}.
+	 * @param ctx the parse tree
+	 */
+	void enterMul_inc(MicroParser.Mul_incContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#mul_inc}.
+	 * @param ctx the parse tree
+	 */
+	void exitMul_inc(MicroParser.Mul_incContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#div_inc}.
+	 * @param ctx the parse tree
+	 */
+	void enterDiv_inc(MicroParser.Div_incContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#div_inc}.
+	 * @param ctx the parse tree
+	 */
+	void exitDiv_inc(MicroParser.Div_incContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroParser#add_inc_stmt}.
 	 * @param ctx the parse tree
@@ -587,6 +717,16 @@ public interface MicroListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDiv_inc_stmt(MicroParser.Div_inc_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#var_Set}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_Set(MicroParser.Var_SetContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#var_Set}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_Set(MicroParser.Var_SetContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroParser#stmt}.
 	 * @param ctx the parse tree
@@ -677,6 +817,16 @@ public interface MicroListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnion_def(MicroParser.Union_defContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MicroParser#load_union_def}.
+	 * @param ctx the parse tree
+	 */
+	void enterLoad_union_def(MicroParser.Load_union_defContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MicroParser#load_union_def}.
+	 * @param ctx the parse tree
+	 */
+	void exitLoad_union_def(MicroParser.Load_union_defContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MicroParser#program}.
 	 * @param ctx the parse tree

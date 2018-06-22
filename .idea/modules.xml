@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Micro.iml" filepath="$PROJECT_DIR$/Micro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/micro_runtime/micro_runtime.iml" filepath="$PROJECT_DIR$/micro_runtime/micro_runtime.iml" />
     </modules>
   </component>
 </project>

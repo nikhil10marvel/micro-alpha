@@ -34,7 +34,20 @@ def long lucas_lehmer(int limit){
         int sq = xy * xy;
         xy = sq - 2;
     }
-    return xy;
+    return (long)xy;
+}
+
+## Approximation of PI through Madhavan-Leibneiz series
+def double approx_PI2(int limit){
+    int nx = 0;
+    double sum = 0;
+    while(nx <= limit){
+        double sign = Math -> pow((double)-1, (double) nx);
+        double num = 1/(double)(2*nx + 1);
+        sum += sign * num;
+        nx += 1;
+    }
+    return sum * 4;
 }
 
 ## Just a test

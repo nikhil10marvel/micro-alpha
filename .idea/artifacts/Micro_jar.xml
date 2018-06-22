@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Micro:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Micro_jar</output-path>
+    <root id="archive" name="Micro.jar">
+      <element id="module-output" name="Micro" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../workspace libs/kryo-4.0.1/kryo-4.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../workspace libs/jboss-javassist-javassist-dfd0733/javassist.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../workspace libs/apache commons cli/commons-cli-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../workspace libs/antlr/antlr-4.7-complete.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

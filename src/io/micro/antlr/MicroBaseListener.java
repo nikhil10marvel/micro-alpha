@@ -124,6 +124,42 @@ public class MicroBaseListener implements MicroListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMod(MicroParser.ModContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMod(MicroParser.ModContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStrcval(MicroParser.StrcvalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStrcval(MicroParser.StrcvalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterString_concat(MicroParser.String_concatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitString_concat(MicroParser.String_concatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterValue(MicroParser.ValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -227,6 +263,18 @@ public class MicroBaseListener implements MicroListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitField(MicroParser.FieldContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArray_field(MicroParser.Array_fieldContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArray_field(MicroParser.Array_fieldContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -484,6 +532,18 @@ public class MicroBaseListener implements MicroListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterValue_collection(MicroParser.Value_collectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue_collection(MicroParser.Value_collectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBoolval(MicroParser.BoolvalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -628,13 +688,61 @@ public class MicroBaseListener implements MicroListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInit_stmt(MicroParser.Init_stmtContext ctx) { }
+	@Override public void enterTryblock(MicroParser.TryblockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInit_stmt(MicroParser.Init_stmtContext ctx) { }
+	@Override public void exitTryblock(MicroParser.TryblockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExceptblock(MicroParser.ExceptblockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExceptblock(MicroParser.ExceptblockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTry_stmt(MicroParser.Try_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTry_stmt(MicroParser.Try_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFor_stmt(MicroParser.For_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFor_stmt(MicroParser.For_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForeach_stmt(MicroParser.Foreach_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForeach_stmt(MicroParser.Foreach_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -659,6 +767,54 @@ public class MicroBaseListener implements MicroListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUval_get(MicroParser.Uval_getContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSub_inc(MicroParser.Sub_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSub_inc(MicroParser.Sub_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdd_inc(MicroParser.Add_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdd_inc(MicroParser.Add_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMul_inc(MicroParser.Mul_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMul_inc(MicroParser.Mul_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDiv_inc(MicroParser.Div_incContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDiv_inc(MicroParser.Div_incContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -707,6 +863,18 @@ public class MicroBaseListener implements MicroListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDiv_inc_stmt(MicroParser.Div_inc_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVar_Set(MicroParser.Var_SetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVar_Set(MicroParser.Var_SetContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -815,6 +983,18 @@ public class MicroBaseListener implements MicroListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnion_def(MicroParser.Union_defContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoad_union_def(MicroParser.Load_union_defContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoad_union_def(MicroParser.Load_union_defContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

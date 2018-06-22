@@ -1,7 +1,6 @@
 package io.micro.core;
 
 public interface Facade {
-
-    void generate();
+    void generate(String output_directory);
 
 }

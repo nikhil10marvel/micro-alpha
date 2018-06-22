@@ -1,5 +1,6 @@
 require "util.min"
 import my.util;
+import io.micrt.log.Log;
 
 module my.nikhil;
 
@@ -17,9 +18,16 @@ def void prt_std(Union student){
  ^ The entry point of the program
  ^#
 def void main(String[] args){
+    union_def @my.nikhil.my;
     int num_of_sides = Integer -> parseInt(args[0]);
     double approx = util->approx_PI(num_of_sides);
     double percent = (approx/Math.PI) * 100;
+    Log -> info("Main", String -> valueOf(percent));
+
+    approx = util -> approx_PI2(num_of_sides);
+    percent = (approx/Math.PI) * 100;
+    System.out -> println("The approximation was " + percent + "% good!");
+
     int xx = 0;
     while(xx < 10){
         System.out -> println(util -> factorial(xx));

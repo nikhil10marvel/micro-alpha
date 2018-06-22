@@ -10,5 +10,6 @@
     <orderEntry type="library" name="javassist" level="project" />
     <orderEntry type="library" name="antlr-4.7-complete" level="project" />
     <orderEntry type="library" name="kryo-4.0.1-javadoc" level="project" />
+    <orderEntry type="library" name="commons-cli-1.4-javadoc" level="project" />
   </component>
 </module>

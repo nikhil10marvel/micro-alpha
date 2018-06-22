@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="micro_runtime:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/micro_runtime_jar</output-path>
+    <root id="archive" name="micro_runtime.jar">
+      <element id="module-output" name="micro_runtime" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../workspace libs/kryo-4.0.1/kryo-4.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -42,6 +42,7 @@ LTE: '<=';
 GTE: '>=';
 IF: 'if';
 WHILE:'while';
+FOR:'for';
 EQ: '==';
 NOT: 'not' | 'NOT' | '!';
 CONST: 'const';
@@ -50,10 +51,11 @@ ELSE: 'else';
 PARAM_SEP: ',';
 LOAD: 'require';
 INCLUDE: 'include';
+TRY: 'try';
+EXCEPT: 'except';
 URL:'url';
 CALL_t: '->';
 UNION_t:'<<';
-INIT: 'init';
 
 SIMP_CHARS: LETTER(LETTER|DIGIT|NOMSYM)+;
 COMPLEX_CHARS: LETTER(LETTER|DIGIT|DOTSYM)+;
@@ -63,19 +65,26 @@ id:SIMP_CHARS;
 mid:COMPLEX_CHARS|id;
 
 bx_type: type_id | id | mid;
-type: TRUE | FALSE | id | mid | FLOAT | INTEGER | DOUBLE | STRING| func_call_out | func_call_local | expr | type_casting | array_ref | uval_get;
+type: TRUE | FALSE | id | mid | FLOAT | INTEGER | DOUBLE | STRING| func_call_out | func_call_local | expr | type_casting | array_ref | uval_get | string_concat;
 
 add: '+';
 sub: '-';
 mul: '*';
 div: '/';
+mod: '%';
+
+strcval: STRING | value;
+string_concat: strcval (add strcval)+;
 
 value: FLOAT | INTEGER | DOUBLE | func_call_local | func_call_out | LPRM expr RPRM | type_casting | mid | array_ref | uval_get;
+negative_value: sub value;
 expr: expr add expr
     | expr sub expr
     | expr mul expr
     | expr div expr
-    | value;
+    | expr mod expr
+    | value
+    | negative_value;
 
 load_inst:LOAD URL? STRING;
 include_inst: INCLUDE URL? STRING;
@@ -90,7 +99,8 @@ module_dec: MODULE_SP mid EOS;
  */
 
 field: 'var' CONST? ptype id ('=' type)? EOS;
-array_def: type_id(LSQB type RSQB)
+array_field: 'var' array_def;
+array_def: type_id(LSQB type RSQB)+ id EOS;
 formalParam: LPRM (type (PARAM_SEP type)*)? RPRM;
 func_call_out: mid CALL_t id formalParam;
 func_call_local: id formalParam;
@@ -121,6 +131,8 @@ notequalto: type '!=' type;
 equalto: type EQ type;
 false_con: 'FALSE' | 'False' | 'false';
 true_con: 'TRUE' | 'True' | 'true';
+
+value_collection:type_id 'set'(LSQB type? (PARAM_SEP type)* RSQB);
 
 boolval:
     type
@@ -155,14 +167,30 @@ if_stmt: IF boolparseexpr LBRC stmt*? RBRC;
 elif_stmt:ELIF boolparseexpr LBRC stmt*? RBRC;
 else_stmt: ELSE LBRC stmt*? RBRC;
 while_stmt: WHILE boolparseexpr LBRC stmt*? RBRC;
-init_stmt: INIT mid;
+tryblock: TRY LBRC stmt*? RBRC;
+exceptblock: EXCEPT mid id LBRC stmt*? RBRC;
+try_stmt:tryblock exceptblock;
+for_stmt: FOR bx_type id '=' type EOS boolparseexpr EOS var_Set LBRC stmt*? RBRC;
+foreach_stmt: FOR bx_type id '?' mid LBRC stmt*? RBRC;
 uval_stmt: mid':'id '=' type EOS;
 uval_get: id UNION_t mid;
 
-add_inc_stmt: mid '+=' type EOS;
-sub_inc_stmt: mid '-=' type EOS;
-mul_inc_stmt: mid '*=' type EOS;
-div_inc_stmt: mid '/=' type EOS;
+sub_inc: mid '-=' type;
+add_inc: mid '+=' type;
+mul_inc: mid '*=' type;
+div_inc: mid '/=' type;
+add_inc_stmt: add_inc EOS;
+sub_inc_stmt: sub_inc EOS;
+mul_inc_stmt: mul_inc EOS;
+div_inc_stmt: div_inc EOS;
+
+var_Set
+      : varset
+      | add_inc
+      | sub_inc
+      | mul_inc
+      | div_inc
+      | array_set_stmt;
 
 stmt
     : varset
@@ -174,12 +202,14 @@ stmt
     | elif_stmt
     | else_stmt
     | while_stmt
+    | try_stmt
     | add_inc_stmt
     | sub_inc_stmt
     | mul_inc_stmt
     | div_inc_stmt
-    | init_stmt
     | uval_stmt
+    | array_def
+    | load_union_def
     ;
 
 /**
@@ -191,7 +221,7 @@ stmt
 ptype: (bx_type|arrayname);
 param: ptype id;
 paramList: LPRM (param(PARAM_SEP param)*)? RPRM;
-function: DEF bx_type id paramList LBRC stmt*? return_stmt? RBRC;
+function: DEF (bx_type|arrayname) id paramList LBRC stmt*? return_stmt? RBRC;
 
 /**
  * Union section
@@ -204,8 +234,9 @@ elem: CONST? id;
 specList: elem(PARAM_SEP elem)*;
 union_def_key: id '=' LBRC specList RBRC EOS;
 union_def: UNION_DEF id LBRC union_def_key* RBRC;
+load_union_def: UNION_DEF '@'mid EOS;
 
-program:compiler_inst*? import_stmt* module_dec union_def* field* function*;
+program:compiler_inst*? import_stmt* module_dec union_def* (field|array_field)* function*;
 
 LINE_COMMENT
     : CMTCH~[\r\n]* -> channel(HIDDEN);
